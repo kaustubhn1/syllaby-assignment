@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "b02c88a7-c9a3-4b88-931b-896065b8dd02",
+		"name": "Book Writer Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26870089"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Fetch Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"david\",\n    \"password\": \"Test123@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/token/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grant collaborator access",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book_id\": 9,\n    \"profile_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/collaborator/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"collaborator",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Collaborator access granted",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_id\": 5,\n    \"profile_id\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/collaborator/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"collaborator",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"User granted access as a collaborator\"\n}"
+						},
+						{
+							"name": "Authorization Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_id\": 5,\n    \"profile_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/collaborator/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"collaborator",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Only the book's author can grant collaborator access to the book.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Revoke collaborator access",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/v1/collaborator/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"collaborator",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Grant collaborator access",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_id\": 5,\n    \"profile_id\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/collaborator/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"collaborator",
+										"1"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"User granted access as a collaborator\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Get all Books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/v1/book/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/v1/book/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get book by Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/v1/book/4",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"4"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"book_name\": \"Lorem Ipsum Vol 1\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"section\": \"Introduction\",\n                \"sub_sections\": [\n                    {\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"section\": \"Why do we use it?\",\n                \"sub_sections\": [\n                    {\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"section\": \"Where does it come from?\"\n                    },\n                    {\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"section\": \"Lorem Ipsum \",\n                        \"sub_sections\": [\n                            {\n                                \"content\": \"Lorem Ipsum galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"section\": \"Lorem Ipsum Dummy Section\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    },\n    \"created\": \"2023-10-03T18:58:33.563430Z\",\n    \"updated\": \"2023-10-03T18:58:33.563443Z\",\n    \"author\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 1\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    },\n                    {\n                        \"section\": \"Lorem Ipsum \",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"Lorem Ipsum Dummy Section\",\n                                \"content\": \"Lorem Ipsum galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/book/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create book",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 1\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    },\n                    {\n                        \"section\": \"Lorem Ipsum \",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"Lorem Ipsum Dummy Section\",\n                                \"content\": \"Lorem Ipsum galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/book/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"book_name\": \"Lorem Ipsum Vol 1\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    },\n                    {\n                        \"section\": \"Lorem Ipsum \",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"Lorem Ipsum Dummy Section\",\n                                \"content\": \"Lorem Ipsum galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    },\n    \"created\": \"2023-10-03T18:58:33.563430Z\",\n    \"updated\": \"2023-10-03T18:58:33.563443Z\",\n    \"author\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 34\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction Updated\",\n                \"content\": \"It is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"What is Lorem Ipsum?\",\n                                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/book/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"book",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized Book name change",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 2\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/book/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Unauthorized request. Only author can edit the book name.\"\n}"
+						},
+						{
+							"name": "Unauthorized Section Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 34\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": []\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/book/9",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"9"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"Unauthorized request. User not granted collaborator access to this book!\"\n}"
+						},
+						{
+							"name": "Update Book",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"book_name\": \"Lorem Ipsum Vol 34\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction Updated\",\n                \"content\": \"It is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"What is Lorem Ipsum?\",\n                                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/book/9",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"id\": 9,\n    \"book_name\": \"Lorem Ipsum Vol 34\",\n    \"content\": {\n        \"sections\": [\n            {\n                \"section\": \"Introduction Updated\",\n                \"content\": \"It is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"What is Lorem Ipsum?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                        \"sub_sections\": [\n                            {\n                                \"section\": \"What is Lorem Ipsum?\",\n                                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\",\n                                \"sub_sections\": []\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"section\": \"Why do we use it?\",\n                \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.\",\n                \"sub_sections\": [\n                    {\n                        \"section\": \"Where does it come from?\",\n                        \"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,\"\n                    }\n                ]\n            }\n        ]\n    },\n    \"created\": \"2023-10-03T20:32:59.242115Z\",\n    \"updated\": \"2023-10-03T20:39:02.242300Z\",\n    \"author\": 2\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

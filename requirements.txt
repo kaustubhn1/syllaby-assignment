@@ -1,0 +1,5 @@
+django==4
+djangorestframework
+psycopg2-binary
+djangorestframework-simplejwt
+pydantic
